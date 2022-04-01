@@ -1,0 +1,35 @@
+{% include "adminportol/base.html" %}
+{% load crispy_forms_tags %}
+{% block container %}
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+  <!-- Navbar -->
+{% include "adminportol/navbar.html" %}
+  <!-- /.navbar -->
+  <!-- Main Sidebar Container -->
+{% include "adminportol/sidebar.html" %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+          <!-- Horizontal Form -->
+       
+        
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+  {% endblock  %}
