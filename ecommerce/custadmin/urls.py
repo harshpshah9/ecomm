@@ -20,6 +20,7 @@ urlpatterns = [
     #product
     path('product/create',ProductCreateView.as_view(),name='product_create'),
     path('product/',ProductListView.as_view(),name="product_list"),
-    path('product/update/<str:slug>',ProductUpdateView.as_view(),name='product_update')
+    path('product/update/<str:slug>',ProductUpdateView.as_view(),name='product_update'),
 
+    path('t',test.as_view(),name="testing")
 ]

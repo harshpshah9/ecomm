@@ -284,3 +284,6 @@ class ProdectDetailView(BaseDetailView):
         print(product_id)
         context['productspecifications'] = ProductSpecification.objects.filter(product_id=product_id)
         return context
+
+class test(BaseTemplateView):
+    template_name = 'userportol/single-product.html'
