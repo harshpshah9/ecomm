@@ -24,6 +24,3 @@ class SignupView(BaseCreateView):
     template_name = "userportol/signup.html"
     success_url = reverse_lazy('user:login')
 
-
-class DashboardTemplateView(TemplateView):
-    template_name = "userportol/shop.html"
