@@ -1,0 +1,475 @@
+{% extends "userportal/base.html" %} 
+{% load static %} 
+{% block css %}
+<style type="text/css">
+	.star-rating {
+		font-size: 0;
+		white-space: nowrap;
+		display: inline-block;
+		/* width: 250px; remove this */
+		height: 50px;
+		overflow: hidden;
+		position: relative;
+		background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+		background-size: contain;
+	  }
+	  .star-rating i {
+		opacity: 0;
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		/* width: 20%; remove this */
+		z-index: 1;
+		background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+		background-size: contain;
+	  }
+	  .star-rating input {
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		opacity: 0;
+		display: inline-block;
+		/* width: 20%; remove this */
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		z-index: 2;
+		position: relative;
+	  }
+	  .star-rating input:hover + i,
+	  .star-rating input:checked + i {
+		opacity: 1;
+	  }
+	  .star-rating i ~ i {
+		width: 40%;
+	  }
+	  .star-rating i ~ i ~ i {
+		width: 60%;
+	  }
+	  .star-rating i ~ i ~ i ~ i {
+		width: 80%;
+	  }
+	  .star-rating i ~ i ~ i ~ i ~ i {
+		width: 100%;
+	  }
+	  ::after,
+	  ::before {
+		height: 100%;
+		padding: 0;
+		margin: 0;
+		box-sizing: border-box;
+		text-align: center;
+		vertical-align: middle;
+	  }
+	  
+	  .star-rating.star-5 {width: 250px;}
+	  .star-rating.star-5 input,
+	  .star-rating.star-5 i {width: 20%;}
+	  .star-rating.star-5 i ~ i {width: 40%;}
+	  .star-rating.star-5 i ~ i ~ i {width: 60%;}
+	  .star-rating.star-5 i ~ i ~ i ~ i {width: 80%;}
+	  .star-rating.star-5 i ~ i ~ i ~ i ~i {width: 100%;}
+	  
+	  .star-rating.star-3 {width: 150px;}
+	  .star-rating.star-3 input,
+	  .star-rating.star-3 i {width: 33.33%;}
+	  .star-rating.star-3 i ~ i {width: 66.66%;}
+	  .star-rating.star-3 i ~ i ~ i {width: 100%;}
+	  
+			  </style> 
+
+{% endblock css %}
+
+{% block container %}
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Product Details Page</h1>
+					<nav class="d-flex align-items-center">
+						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
+						<a href="single-product.html">product-details</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!--================Single Product Area =================-->
+
+	<div class="product_image_area">
+		<div class="container">
+			<form  >
+				{% csrf_token %}
+			<div class="row s_product_inner">
+				<div class="col-lg-6">
+					
+					<div class="s_Product_carousel">
+						{% for image in product.images.all %}
+						<div class="single-prd-item">
+							<img class="img-fluid" src="{{image}}" alt="">
+						</div>
+						 
+						{% endfor %}
+					</div>
+				</div>
+				<div class="col-lg-5 offset-lg-1">
+					<div class="s_product_text">
+						<h3>{{product.name}}</h3>
+						<h2>RS.{{product.price}}</h2>
+						<ul class="list">
+							<li><a class="active" href="#"><span>Category</span>{{product.category}}</a></li>
+							<li><a href="#"><span>Availibility</span> : In Stock</a></li>
+						</ul>
+						<p>{{product.description}}</p>
+						<div class="product_count">
+							<label for="qty">Quantity:</label>
+							<input type="number" name="qty" id="sst" maxlength=12 minlength=1 min=1 value="1" title="Quantity:" class="input-text qty">
+							{% comment %} <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+							 class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
+							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+							 class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button> {% endcomment %}
+						</div>
+
+						<div class="card_area d-flex align-items-center">
+							<input type="submit" data-productid="{{product.id}}"  class="primary-btn addtocart" value="Add to Cart"/>
+							<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
+							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		</div>
+	</div>
+
+	<!--================End Single Product Area =================-->
+
+	<!--================Product Description Area =================-->
+	<section class="product_description_area">
+		<div class="container">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Description</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+					 aria-selected="false">Specification</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+					 aria-selected="false">Reviews</a>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<p>{{product.long_description}}</p>
+				</div>
+				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+					<div class="table-responsive">
+						<table class="table">
+							{% for specifications in productspecifications %}
+							<tbody>
+								<tr>
+									<td>
+										<h5>{{specifications.key}}</h5>
+									</td>
+									<td>
+										<h5>{{specifications.value}}</h5>
+									</td>
+								</tr>
+								
+							</tbody>
+							{% endfor %}
+						</table>
+					</div>
+				</div>
+				
+				<div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="row total_rate">
+								<div class="col-6">
+									<div class="box_total">
+										<h5>Overall</h5>
+										<h4>4.0</h4>
+										<h6>(03 Reviews)</h6>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="rating_list">
+										<h3>Based on 3 Reviews</h3>
+										<ul class="list">
+											<li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="review_list">
+								<div class="review_item">
+									<div class="media">
+										<div class="d-flex">
+											<img src="img/product/review-1.png" alt="">
+										</div>
+										<div class="media-body">
+											<h4>Blake Ruiz</h4>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+									</div>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+										commodo</p>
+								</div>
+								<div class="review_item">
+									<div class="media">
+										<div class="d-flex">
+											<img src="img/product/review-2.png" alt="">
+										</div>
+										<div class="media-body">
+											<h4>Blake Ruiz</h4>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+									</div>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+										commodo</p>
+								</div>
+								<div class="review_item">
+									<div class="media">
+										<div class="d-flex">
+											<img src="img/product/review-3.png" alt="">
+										</div>
+										<div class="media-body">
+											<h4>Blake Ruiz</h4>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+									</div>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+										commodo</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="review_box">
+								<h4>Add a Review</h4>
+								<p>Rating</p>
+								<div class="row contact_form"  method="post" id="contactForm" novalidate="novalidate">
+								<div class="rating rating2">
+									<span class="star-rating star-5">
+										<input type="radio" name="rating" class="rate" value="1"><i></i>
+										<input type="radio" name="rating" class="rate" value="2"><i></i>
+										<input type="radio" name="rating" class="rate" value="3"><i></i>
+										<input type="radio" name="rating" class="rate" value="4"><i ></i>
+										<input type="radio" name="rating" class="rate" value="5"><i></i>
+									</span>
+								</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<textarea class="form-control" name="message" id="message" rows="1" placeholder="Review" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Review'"></textarea></textarea>
+										</div>
+									</div>
+									<div class="col-md-12 text-right">
+										<button type="submit" value="submit" class="primary-btn-review">Submit Now</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Product Description Area =================-->
+
+	<!-- Start related-product Area -->
+	<!-- <section class="related-product-area section_gap_bottom">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-6 text-center">
+					<div class="section-title">
+						<h1>Deals of the Week</h1>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+							magna aliqua.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-9">
+					<div class="row">
+						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+							<div class="single-related-product d-flex">
+								<a href="#"><img src="img/r1.jpg" alt=""></a>
+								<div class="desc">
+									<a href="#" class="title">Black lace Heels</a>
+									<div class="price">
+										<h6>$189.00</h6>
+										<h6 class="l-through">$210.00</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+							<div class="single-related-product d-flex">
+								<a href="#"><img src="img/r2.jpg" alt=""></a>
+								<div class="desc">
+									<a href="#" class="title">Black lace Heels</a>
+									<div class="price">
+										<h6>$189.00</h6>
+										<h6 class="l-through">$210.00</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+							<div class="single-related-product d-flex">
+								<a href="#"><img src="img/r3.jpg" alt=""></a>
+								<div class="desc">
+									<a href="#" class="title">Black lace Heels</a>
+									<div class="price">
+										<h6>$189.00</h6>
+										<h6 class="l-through">$210.00</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+							<div class="single-related-product d-flex">
+								<a href="#"><img src="img/r5.jpg" alt=""></a>
+								<div class="desc">
+									<a href="#" class="title">Black lace Heels</a>
+									<div class="price">
+										<h6>$189.00</h6>
+										<h6 class="l-through">$210.00</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+							<div class="single-related-product d-flex">
+								<a href="#"><img src="img/r6.jpg" alt=""></a>
+								<div class="desc">
+									<a href="#" class="title">Black lace Heels</a>
+									<div class="price">
+										<h6>$189.00</h6>
+										<h6 class="l-through">$210.00</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+							<div class="single-related-product d-flex">
+								<a href="#"><img src="img/r7.jpg" alt=""></a>
+								<div class="desc">
+									<a href="#" class="title">Black lace Heels</a>
+									<div class="price">
+										<h6>$189.00</h6>
+										<h6 class="l-through">$210.00</h6>
+									</div>
+								</div>
+							</div>
+						</div>		
+						<div class="col-lg-4 col-md-4 col-sm-6">
+							<div class="single-related-product d-flex">
+								<a href="#"><img src="img/r9.jpg" alt=""></a>
+								<div class="desc">
+									<a href="#" class="title">Black lace Heels</a>
+									<div class="price">
+										<h6>$189.00</h6>
+										<h6 class="l-through">$210.00</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6">
+							<div class="single-related-product d-flex">
+								<a href="#"><img src="img/r10.jpg" alt=""></a>
+								<div class="desc">
+									<a href="#" class="title">Black lace Heels</a>
+									<div class="price">
+										<h6>$189.00</h6>
+										<h6 class="l-through">$210.00</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-6">
+							<div class="single-related-product d-flex">
+								<a href="#"><img src="img/r11.jpg" alt=""></a>
+								<div class="desc">
+									<a href="#" class="title">Black lace Heels</a>
+									<div class="price">
+										<h6>$189.00</h6>
+										<h6 class="l-through">$210.00</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="ctg-right">
+						<a href="#" target="_blank">
+							<img class="img-fluid d-block mx-auto" src="img/category/c5.jpg" alt="">
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section> -->
+	<!-- End related-product Area -->
+
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+	$(".addtocart").click(function () {
+		console.log('hello>>>>>>>>>')
+		qty=$('.qty').val()		
+		console.log(qty)
+		product_id = $(this).data("productid");
+		console.log(product_id)
+		$.ajax({
+		url: `{% url 'cart:addcart' '0' %}`.replace("0", product_id),
+		type: "POST",
+		data: { csrfmiddlewaretoken: "{{csrf_token}}",
+				qty:qty },
+		success: function (response) {
+		  console.log(response);  
+		},
+	  });
+	});
+  </script>
+  
+<script type="text/javascript">
+	$(".primary-btn-review").click(function () {
+		console.log('hello>>>>>>>>>')
+		data=$(.rate).val()
+		console.log(data);
+	});
+  </script>
+{% endblock javascript %}

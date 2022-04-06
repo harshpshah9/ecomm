@@ -1,7 +1,69 @@
-{% include "userportol/base.html" %}
-{% load crispy_forms_tags %}
 {% load static %}
-{% block container %}
+<html lang="en-US" itemscope="itemscope" itemtype="http://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Electro &#8211; Electronics Ecommerce Theme</title>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'userportol/css/bootstrap.min.css' %}" media="all" />
+        <link rel="stylesheet" type="text/css" href="{% static 'userportol/css/font-awesome.min.css' %}" media="all" />
+        <link rel="stylesheet" type="text/css" href="{% static 'userportol/css/animate.min.css' %}" media="all" />
+        <link rel="stylesheet" type="text/css" href="{% static 'userportol/css/font-electro.css' %}" media="all" />
+        <link rel="stylesheet" type="text/css" href="{% static 'userportol/css/owl-carousel.css' %}" media="all" />
+        <link rel="stylesheet" type="text/css" href="{% static 'userportol/css/style.css' %}" media="all" />
+        <link rel="stylesheet" type="text/css" href="{% static 'userportol/css/colors/yellow.css' %}" media="all" />
+
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,700italic,800,800italic,600italic,400italic,300italic' rel='stylesheet' type='text/css'>
+
+        <link rel="shortcut icon" href="assets/images/fav-icon.png">
+
+<style>
+	#snackbar {
+	  visibility: hidden;
+	  min-width: 250px;
+	  margin-left: -125px;
+	  background-color: #333;
+	  color: #fff;
+	  text-align: center;
+	  border-radius: 2px;
+	  padding: 16px;
+	  position: fixed;
+	  z-index: 1;
+	  left: 50%;
+	  bottom: 30px;
+	  font-size: 17px;
+	}
+
+	#snackbar.show {
+	  visibility: visible;
+	  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	}
+
+	@-webkit-keyframes fadein {
+	  from {bottom: 0; opacity: 0;}
+	  to {bottom: 30px; opacity: 1;}
+	}
+
+	@keyframes fadein {
+	  from {bottom: 0; opacity: 0;}
+	  to {bottom: 30px; opacity: 1;}
+	}
+
+	@-webkit-keyframes fadeout {
+	  from {bottom: 30px; opacity: 1;}
+	  to {bottom: 0; opacity: 0;}
+	}
+
+	@keyframes fadeout {
+	  from {bottom: 30px; opacity: 1;}
+	  to {bottom: 0; opacity: 0;}
+	}
+	</style>
+	</head>
+		{% load crispy_forms_tags %}
+
  <body class="page home page-template-default">
         <div id="page" class="hfeed site">
             {% include "userportol/heder.html" %}
@@ -9,6 +71,7 @@
 
             <div id="content" class="site-content" tabindex="-1">
                 <div class="container">
+					<div id="snackbar">message</div>
                     <div id="primary" class="content-area">
                         <main id="main" class="site-main">
                             <div class="home-v3-slider" >
@@ -195,18 +258,36 @@
                             				</div>
                             			</section>
                             		</div><!-- /.tab-pane -->
-
-
-
                                                	</div><!-- /.tab-content -->
                             </section><!-- /.products-carousel-tabs -->
 
                         </main><!-- #main -->
                     </div>
                     </div><!-- #primary -->
-                </div><!-- .container -->
+                </div><!-- .ontainer -->
 
         {% include "userportol/footer.html" %}
             </div><!-- #content -->
-        {% endblock container %}
 
+<script type="text/javascript">
+	$("#addtocart").click(function () {
+		qty=1
+		product_id = $(this).data("productid");
+		console.log(product_id)
+		$.ajax({
+		url: `{% url 'cart:addcart' '0' %}`.replace("0", product_id),
+		type: "POST",
+		data: { csrfmiddlewaretoken: "{{csrf_token}}",qty:qty },
+		success: function (response) {
+		  console.log(response);
+		  msg = response.message;
+		  console.log(msg);
+		  $('#snackbar').text(msg);
+		  var x = document.getElementById("snackbar");
+  		  x.className = "show";
+  		  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+		  $('#message').text(msg);
+		},
+	  });
+	});
+  </script>

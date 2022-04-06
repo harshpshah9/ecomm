@@ -24,7 +24,8 @@ urlpatterns = [
     path('admin/',include('custadmin.urls')),
     path("",include(('user.urls','user'),namespace='user')),
     path("logout/", LogoutView.as_view(), name="logout"),
-
+    path("cart/",include(('cart.urls','cart'),namespace='cart')),
+    path("order/",include(('order.urls','order'),namespace='order')),
 ]
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,

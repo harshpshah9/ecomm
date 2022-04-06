@@ -199,7 +199,7 @@ class ProductDeleteView(BaseDeleteView):
 
 
 class DashboardTemplateView(BaseTemplateView):
-    template_name = "userportol/index.html"
+    template_name = "userportal/index.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -290,4 +290,4 @@ class ProdectDetailView(BaseDetailView):
 
 
 class test(BaseTemplateView):
-    template_name = 'userportol/index.html'
+    template_name = 'userportal/index.html'

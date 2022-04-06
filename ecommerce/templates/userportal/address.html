@@ -1,0 +1,57 @@
+{% extends "userportal/base.html" %}
+{% block container %}
+ {% load static %} 
+ {% load crispy_forms_tags %}
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Checkout</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="single-product.html">Checkout</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Checkout Area =================-->
+    <section class="checkout_area section_gap">
+        <div class="container">
+            
+            <div class="billing_details">
+                <div class="row">
+                    <form method="post">
+                    <div class="col-lg-8">
+                        {% csrf_token %}
+                        <h3>Add Address</h3>
+                            <div class="col-md-12 form-group p_star">
+                                {{form.address1|as_crispy_field}}
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                {{form.city|as_crispy_field}}
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                {{form.state|as_crispy_field}}
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                {{form.country|as_crispy_field}}
+                            </div>
+                            <div class="col-md-12 form-group">
+                                {{form.zipcode|as_crispy_field}}
+                            </div> 
+                            <div class="col-md-12 form-group">
+                                <input type="submit" class="btn btn-primary" >
+                            </div>
+                    </div>
+                </form> 
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Checkout Area =================-->
+
+    {% endblock %}
