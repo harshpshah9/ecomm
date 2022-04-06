@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.forms import modelformset_factory
 from django.db.models import Q
 
+
 # Category.
 class CategoryListView(BaseListView):
     """ Admin List category """
@@ -145,7 +146,7 @@ class ProductUpdateView(BaseUpdateView):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
             context['product_meta_formset'] = ProductMetaInlineFormset(self.request.POST, self.request.FILES,
-                                    instance=self.object)
+                                                                       instance=self.object)
             print(context['product_meta_formset'])
             # context['product_specifiaction'] = ProductSpecificationMetaInlineFormset(self.request.POST,self.object)
             # print(context['product_specifiaction'])
@@ -153,7 +154,7 @@ class ProductUpdateView(BaseUpdateView):
             context['product_meta_formset'] = ProductMetaInlineFormset(instance=self.object)
             # context['product_specifiaction'] = ProductSpecificationMetaInlineFormset(self.object)
         # print(">>>>>>>>",context['product_specifiaction'])
-        print(">>>>>>>>>>>",context['product_meta_formset'])
+        print(">>>>>>>>>>>", context['product_meta_formset'])
         return context
 
     def post(self, request, *args, **kwargs):
@@ -161,15 +162,15 @@ class ProductUpdateView(BaseUpdateView):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
 
-        product_meta_formset = ProductMetaInlineFormset(self.request.POST, self.request.FILES,instance=self.object)
+        product_meta_formset = ProductMetaInlineFormset(self.request.POST, self.request.FILES, instance=self.object)
         # print('product_meta_formset',product_meta_formset)
         if form.is_valid() and product_meta_formset.is_valid():
-            return self.form_valid(form, product_meta_formset,instance=self.object)
+            return self.form_valid(form, product_meta_formset, instance=self.object)
 
         else:
             return self.form_invalid(form, product_meta_formset)
 
-    def form_valid(self, form, product_meta_formset,instance):
+    def form_valid(self, form, product_meta_formset, instance):
         context = self.get_context_data()
         product_meta_formset = context['product_meta_formset']
         instance = form.save(commit=False)
@@ -197,12 +198,14 @@ class ProductDeleteView(BaseDeleteView):
     success_url = reverse_lazy("custadmin:category_list")
 
 
-class HomeView(BaseTemplateView):
+class DashboardTemplateView(BaseTemplateView):
     template_name = "userportal/index.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['products'] = Product.objects.all()
+        context['first'] = Product.objects.all().order_by('-created')[:4]
+        context['secound'] = Product.objects.all().order_by('-created')[5:8]
+        context['third'] = Product.objects.all().order_by('-created')[9:12]
         return context
 
 
@@ -285,5 +288,6 @@ class ProdectDetailView(BaseDetailView):
         context['productspecifications'] = ProductSpecification.objects.filter(product_id=product_id)
         return context
 
+
 class test(BaseTemplateView):
-    template_name = 'userportol/single-product.html'
+    template_name = 'userportal/index.html'

@@ -1,0 +1,81 @@
+{% extends "userportal/base.html" %}
+{% block container %}
+ {% load static %} 
+ <!-- {% load crispy_forms_tags %} -->
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+      {{form.errors}}
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Login/Register</h1>
+					<nav class="d-flex align-items-center">
+						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="category.html">Login/Register</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!--================Login Box Area =================-->
+	<section class="login_box_area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="login_box_img">
+						<img class="img-fluid" src={% static "userportal/img/login.jpg"%} alt="">
+						<div class="hover">
+							<h4>New to our website?</h4>
+							<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
+							<a class="primary-btn" href="#">Login</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="login_form_inner">
+						<h3>Registration</h3>
+						<form class="row login_form"  method="post" id="contactForm" novalidate="novalidate">
+              {% csrf_token %}
+          
+							<div class="col-md-12 form-group">
+                <label>First name</label>
+							{{form.first_name}}
+							</div>
+							<div class="col-md-12 form-group">
+                <label>Last name</label>
+                {{form.last_name}}
+							</div>
+
+              <div class="col-md-12 form-group">
+                <label>Email</label>
+                {{form.email}}
+							</div>
+							<div class="col-md-12 form-group">
+								<label>Phone Number</label>
+								{{form.phone_no}}
+											</div>
+							<div class="col-md-12 form-group">
+               	
+              <div class="col-md-12 form-group">
+                <label>Password</label>
+                {{form.password1}}
+							</div>
+              <div class="col-md-12 form-group">
+                <label>Conform Password</label>
+                {{form.password2}}
+							</div>
+							</div>
+							<div class="col-md-10 form-group">
+								<button type="submit" value="submit" class="primary-btn">Signup</button>
+								
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+	{% endblock container %}

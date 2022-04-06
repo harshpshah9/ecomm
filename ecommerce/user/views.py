@@ -5,11 +5,13 @@ from .forms import UserCreateForm
 from django.urls.base import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
-
+from .models import *
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 
 # Create your views here.
 class LoginView(LoginView):
-    template_name = 'userportol/login.html'
+    template_name = 'userportal/login.html'
     form_class = AuthenticationForm
 
     def get_success_url(self):
@@ -21,9 +23,39 @@ class LoginView(LoginView):
 
 class SignupView(BaseCreateView):
     form_class = UserCreateForm
-    template_name = "userportol/signup.html"
+    template_name = "userportal/signup.html"
     success_url = reverse_lazy('user:login')
 
 
-class DashboardTemplateView(TemplateView):
-    template_name = "userportol/shop.html"
+class WishlistCreateview(LoginRequiredMixin, BaseCreateView):
+    def post(self, request, *args, **kwargs):
+
+        product_id = self.kwargs.get('productid')
+        product = Product.objects.get(id=product_id)
+
+        wishlist, is_created = Wishlist.objects.get_or_create(user=self.request.user, products=product)
+        if is_created:
+            wishlist.save()
+            message = "wishlist created successfully"
+        else:
+            wishlist.delete()
+            message = "wishlist Remove"
+        return JsonResponse(data={
+            'message': message
+        })
+
+
+class WishlistListView(LoginRequiredMixin, BaseListView):
+    model = Wishlist
+    template_name = 'userportal/wistlist.html'
+    context_object_name = 'userwistlist'
+
+    def get_queryset(self):
+        return Wishlist.objects.filter(user=self.request.user)
+
+
+class WishlistDeleteView(BaseDeleteView):
+    model = Wishlist
+    template_name = 'userportal/wistlist.html'
+    success_url = reverse_lazy('user:wishlist')
+

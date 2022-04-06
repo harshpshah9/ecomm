@@ -1,0 +1,69 @@
+{% extends "userportal/base.html" %}
+{% load crispy_forms_tags %}
+{% block container %}
+ {% load static %} 	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Confirmation</h1>
+					<nav class="d-flex align-items-center">
+						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+						<p>UserProfile</p>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!--================Order Details Area =================-->
+	<section class="order_details section_gap">
+		<div class="container">
+	
+			
+			<div class="order_details_table">
+				<h2>User profile</h2>
+				<div class="table-responsive">
+					<form class="forms-sample" method="post"  enctype="multipart/form-data">
+						{% csrf_token %}
+						<div class="form-group">
+						  <!-- <label for="exampleInputName1">First Name</label> -->
+						  {{form.first_name|as_crispy_field}}
+						</div>
+						<div class="form-group">
+						 <!-- <label for="exampleInputName1"> Last Name</label>  -->
+						  {{form.last_name|as_crispy_field}}
+						</div>
+						<div class="form-group">
+						   <!-- <label for="exampleInputName1">Email</label> -->
+						  {{form.email|as_crispy_field}}
+						  <div class="form-group">
+							  <!-- <label for="exampleInputName1">Gender</label>  -->
+							 {{form.gender|as_crispy_field}}
+						   </div>
+						</div>
+						<div class="form-group">
+						   <!-- <label for="exampleInputName1">Phone Number</label>  -->
+						  {{form.phone_no|as_crispy_field}}
+						</div>
+								   
+						<div class="form-group">
+							 {% if form.image %}
+							 <!-- {{form.image}} -->
+							 {% else %}
+							 <img  src="{% static "userportal/img/r7.jpg" %}">
+							 {% endif %}   
+							 {{form.image|as_crispy_field}} 
+						  <!-- <label for="exampleInputName1">Image</label> -->
+					   </div> 
+		  
+						<button type="submit" class="btn btn-primary ">Submit</button> 
+						 
+					  </form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Order Details Area =================-->
+{% endblock %}
