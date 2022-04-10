@@ -1,25 +1,21 @@
 {% extends "adminportol/base.html" %}
 {% load crispy_forms_tags %}
 {% block container %}
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
 {% include "adminportol/navbar.html" %}
   <!-- /.navbar -->
   <!-- Main Sidebar Container -->
 {% include "adminportol/sidebar.html" %}
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
 
-    <!-- /.content-header -->
-    <!-- Main content -->
+  <div class="content-wrapper">
     <div class="content">
       <div class="container-fluid">
           <!-- Horizontal Form -->
           <div class="card card-info">
             <div class="card-header">
-              <h3 class="card-title">Category</h3>
+              <h3 class="card-title">Coupon</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -27,15 +23,15 @@
                 {% csrf_token %}
               <div class="card-body">
                 <div class="form-group row">
-                 
-                  <div class="col-sm-10">
+
+                  <div class="col-sm-12">
                     {{form|crispy}}
                   </div>
                 </div>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button type="submit" class="btn btn-info">Update</button>
+                <button type="submit" class="btn btn-info">Create</button>
               </div>
               <!-- /.card-footer -->
             </form>

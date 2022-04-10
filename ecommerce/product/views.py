@@ -73,7 +73,7 @@ class BrandDeleteView(BaseDeleteView):
 class CouponCreateView(BaseCreateView):
     """ Admin create brand """
     model = Coupon
-    field = ['name','product','price','status']
+    form_class = CoupuanForm
     template_name = 'adminportol/coupon_create.html'
     success_url = reverse_lazy("custadmin:coupon_list")
 
@@ -81,12 +81,12 @@ class CouponListView(BaseListView):
     """ Admin List brand """
     model = Coupon
     template_name = 'adminportol/coupon_list.html'
-    context_object_name = 'Coupons'
+    context_object_name = 'coupons'
 
 class CouponUpdateView(BaseUpdateView):
     """ Admin update brand """
     model = Coupon
-    field = ['name','product','price','status']
+    form_class=CoupuanForm
     template_name = 'adminportol/coupon_update.html'
     success_url = reverse_lazy("custadmin:coupon_list")
 
@@ -174,13 +174,8 @@ class ProductUpdateView(BaseUpdateView):
             context['product_meta_formset'] = ProductMetaInlineFormset(self.request.POST, self.request.FILES,
                                                                        instance=self.object)
             print(context['product_meta_formset'])
-            # context['product_specifiaction'] = ProductSpecificationMetaInlineFormset(self.request.POST,self.object)
-            # print(context['product_specifiaction'])
         else:
             context['product_meta_formset'] = ProductMetaInlineFormset(instance=self.object)
-            # context['product_specifiaction'] = ProductSpecificationMetaInlineFormset(self.object)
-        # print(">>>>>>>>",context['product_specifiaction'])
-        print(">>>>>>>>>>>", context['product_meta_formset'])
         return context
 
     def post(self, request, *args, **kwargs):
@@ -189,10 +184,8 @@ class ProductUpdateView(BaseUpdateView):
         form = self.get_form(form_class)
 
         product_meta_formset = ProductMetaInlineFormset(self.request.POST, self.request.FILES, instance=self.object)
-        # print('product_meta_formset',product_meta_formset)
         if form.is_valid() and product_meta_formset.is_valid():
             return self.form_valid(form, product_meta_formset, instance=self.object)
-
         else:
             return self.form_invalid(form, product_meta_formset)
 
@@ -213,7 +206,6 @@ class ProductUpdateView(BaseUpdateView):
                                   product_meta_formset=product_meta_formset
                                   )
         )
-
     success_url = reverse_lazy("custadmin:category_list")
 
 
@@ -229,7 +221,7 @@ class DashboardTemplateView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['products'] = Product.objects.all().order_by('-created')
+        context['products'] = Product.objects.all().order_by('-created')[:12]
         return context
 
 
@@ -237,7 +229,7 @@ class ProductListView(BaseListView):
     template_name = 'userportal/category.html'
     model = Product
     context_object_name = 'products'
-    paginate_by = 3
+    paginate_by = 12
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

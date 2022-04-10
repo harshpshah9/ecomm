@@ -79,7 +79,7 @@
                                 </ul>
 
                                 </div>
-                                <button type="submit" class="primary-btn">Placed Order</a>
+                                <button type="submit" class="primary-btn">Placed Order</button>
                             </div>
                             
                         </div>
@@ -91,3 +91,16 @@
     <!--================End Checkout Area =================-->
 
     {% endblock %}
+{% block javascript %}
+<script>
+$(document).ready(function(){
+  $(".primary-btn").click(function(){
+    alert("The paragraph was clicked.");
+  });
+});
+
+
+    
+</script>
+{% endblock javascript %}
+

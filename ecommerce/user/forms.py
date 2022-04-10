@@ -2,6 +2,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
 from .models import *
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+from django.utils.translation import gettext, gettext_lazy as _
 
 class  UserCreateForm(UserCreationForm):
     password1 = forms.CharField(label='password',widget=forms.PasswordInput)
@@ -29,17 +31,25 @@ class  UserCreateForm(UserCreationForm):
         user.save()        
         return user
 
-    class UserUpdateForm(forms.ModelForm):
-        class Meta:
-            model = User
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
 
-            fields = ['first_name', 'last_name', 'email', 'phone_no', 'gender', 'image']
+        fields = ['first_name', 'last_name', 'email', 'phone_no', 'gender', 'image']
 
-            def __init__(self, *args, **kwargs):
-                super().__init__(*args, **kwargs)
-                self.fields['email'].disabled = True
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields['email'].disabled = True
 
-    class UserAddressForm(forms.ModelForm):
-        class Meta:
-            model = UserAddress
-            fields = ['address', 'state', 'city', 'country', 'zipcode']
+class UserAddressForm(forms.ModelForm):
+    class Meta:
+        model = UserAddress
+        fields = ['address', 'state', 'city', 'country', 'zipcode']
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.EmailField(
+        label=_("Email"),
+        max_length=254,
+        widget=forms.EmailInput(attrs={'autocomplete': 'email'})
+    )

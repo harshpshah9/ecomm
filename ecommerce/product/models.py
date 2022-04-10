@@ -73,7 +73,6 @@ class ProductSpecification(TimeStampedModel, models.Model):
 
 class Coupon(TimeStampedModel, ActivatorModel, models.Model):
     name = models.CharField(max_length=250)
-    product = models.ForeignKey(Product, related_name='coupon', on_delete=models.CASCADE)
     price = models.IntegerField()
 
     def __str__(self):

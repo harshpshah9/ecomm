@@ -42,13 +42,13 @@ class OrderListView(LoginRequiredMixin, BaseListView):
 
 
 class AdminOrderListView(SuperuserAccessMixin, BaseListView):
-    template_name = 'adminportal/orderlist.html'
+    template_name = 'adminportol/order_list.html'
     model = Order
     context_object_name = 'orders'
 
 
 class AdminOrderDetailView(SuperuserAccessMixin, BaseDetailView):
-    template_name = 'adminportal/orderdetails.html'
+    template_name = 'adminportol/order_list.html'
     model = Order
     context_object_name = 'orders'
 
@@ -60,8 +60,8 @@ class AdminOrderDetailView(SuperuserAccessMixin, BaseDetailView):
 
 
 class OrderStatusUpdateView(BaseUpdateView):
-    model = OrderItem
-    template_name = 'adminportal/orderstatusupdate.html'
+    model = Order
+    template_name = 'adminportol/order_status_update.html'
     fields = ['status']
     success_url = reverse_lazy('order:order_admin_list')
 

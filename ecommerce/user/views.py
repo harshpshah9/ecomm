@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect,render
 from django.contrib.auth.views import LoginView
 from base.views import *
-from .forms import UserCreateForm
+from .forms import *
 from django.urls.base import reverse
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
@@ -14,7 +14,7 @@ from django.contrib.auth.views import *
 # Create your views here.
 class LoginView(LoginView):
     template_name = 'userportal/login.html'
-    form_class = AuthenticationForm
+    form_class = LoginForm
 
     def get_success_url(self):
         if self.request.user.is_superuser:
@@ -79,5 +79,28 @@ class PasswordChangeView(PasswordChangeView):
         else:
             return ['userportal/change_password.html']
 
+class UserAddressCreateView(BaseCreateView):
+    model=UserAddress
+    fields=['address','state','city','country','zipcode']
+    template_name='userportal/address.html'
+    def get_success_url(self):
+        return reverse_lazy('cart:checkout')
+    def form_valid(self, form):
+        instance = form.instance
+        instance.user = self.request.user
+        instance.save()    
+        return redirect(self.get_success_url())
+               
+
+class UserAddressUpdateview(BaseUpdateView):
+    model=UserAddress
+    form_class= UserAddressForm
+    template_name='userportal/address.html'      
+    success_url=reverse_lazy('cart:checkout')
+
+class UserAddressDeleteview(BaseDeleteView):
+    model=UserAddress
+    template_name='userportal/address.html'
+    success_url=reverse_lazy('cart:checkout')
 
 
