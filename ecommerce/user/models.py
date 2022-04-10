@@ -5,15 +5,13 @@ from product.models import Product
 from django_extensions.db.models import *
 
 # Create your models here.
-class User(AbstractUser):
+class User(AbstractUser, TimeStampedModel):
     choice = [('m', 'male'),
               ('f', 'female')]
     gender = models.CharField(max_length=6, choices=choice, null=True)
     phone_no = models.CharField(max_length=10, null=True)
     image = models.ImageField(upload_to='avtar', null=True)
-    is_active = models.BooleanField(default=True)
-    create_at = models.DateTimeField(auto_now=True, null=True)
-    update_at = models.DateTimeField(auto_now=True, null=True)
+
 
     def __str__(self):
         return self.email

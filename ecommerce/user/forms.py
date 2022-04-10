@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
-from .models import User
+from .models import *
 from django import forms
 
 class  UserCreateForm(UserCreationForm):
@@ -28,4 +28,18 @@ class  UserCreateForm(UserCreationForm):
         user.set_password(self.cleaned_data["password1"])
         user.save()        
         return user
-    
+
+    class UserUpdateForm(forms.ModelForm):
+        class Meta:
+            model = User
+
+            fields = ['first_name', 'last_name', 'email', 'phone_no', 'gender', 'image']
+
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.fields['email'].disabled = True
+
+    class UserAddressForm(forms.ModelForm):
+        class Meta:
+            model = UserAddress
+            fields = ['address', 'state', 'city', 'country', 'zipcode']

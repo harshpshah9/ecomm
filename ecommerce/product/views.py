@@ -70,8 +70,34 @@ class BrandDeleteView(BaseDeleteView):
     success_url = reverse_lazy("custadmin:brand_list")
 
 
+class CouponCreateView(BaseCreateView):
+    """ Admin create brand """
+    model = Coupon
+    field = ['name','product','price','status']
+    template_name = 'adminportol/coupon_create.html'
+    success_url = reverse_lazy("custadmin:coupon_list")
+
+class CouponListView(BaseListView):
+    """ Admin List brand """
+    model = Coupon
+    template_name = 'adminportol/coupon_list.html'
+    context_object_name = 'Coupons'
+
+class CouponUpdateView(BaseUpdateView):
+    """ Admin update brand """
+    model = Coupon
+    field = ['name','product','price','status']
+    template_name = 'adminportol/coupon_update.html'
+    success_url = reverse_lazy("custadmin:coupon_list")
+
+class CouponDeleteView(BaseDeleteView):
+    """ Admin delete brand """
+    model = Coupon
+    template_name = 'adminportol/brand_list.html'
+    success_url = reverse_lazy("custadmin:brand_list")
+
 # product
-class ProductListView(BaseListView):
+class ProductAdminListView(BaseListView):
     """ Admin List Product """
     model = Product
     template_name = 'adminportol/product_list.html'
@@ -203,9 +229,7 @@ class DashboardTemplateView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['first'] = Product.objects.all().order_by('-created')[:4]
-        context['secound'] = Product.objects.all().order_by('-created')[5:8]
-        context['third'] = Product.objects.all().order_by('-created')[9:12]
+        context['products'] = Product.objects.all().order_by('-created')
         return context
 
 
@@ -236,46 +260,6 @@ class ProductListView(BaseListView):
             products = products.filter(name__icontains=search)
         return products
 
-        # if category_slug and brand_list and product:
-        #     products = Product.objects.filter(category__slug = category_slug, brand__slug = brand_list,name__icontains=product)
-        #     print('>>>>>>>>>>6',products)
-        #     return products
-        # elif category_slug and brand_list:
-        #     products = Product.objects.filter(category__slug = category_slug, brand__slug = brand_list)
-        #     print('>>>>>>>>>>7',products)
-        #     return products
-        # elif category_slug and product:
-        #     products = Product.objects.filter(category__slug = category_slug , name__icontains = product)
-        #     print('>>>>>>>>>>8',products)
-        #     return products
-        # elif brand_list and product:
-        #     print(brand_list)
-        #     products = Product.objects.filter(brand__slug = brand_list , name__icontains =product)
-        #     print('>>>>>>>>>>9',products)
-        #     return products
-        # elif brand_list:
-        #     print(brand_list)
-        #     products = Product.objects.filter(brand__slug =  brand_list)
-        #     print('>>>>>>>>>>10',products)
-        #     return products
-        # elif category_slug:
-        #     products = Product.objects.filter(category__slug = category_slug)
-        #     print('>>>>>>>>>>11',products)
-        #     return products
-        # elif product:
-        #     products = Product.objects.filter(name__icontains=product)
-        #     print('>>>>>>>>>>12',products)
-        #     return products
-        # else:
-        #     products = Product.objects.all()
-        #     print('>>>>>>>>>>0',products)
-        #     return products
-
-
-# Product.objects.filter(Q(brand__slug="adidas")&Q(name__icontains="101")&Q(category__slug="adidas"))
-# Product.objects.filter(Q(brand__slug="adidas")&Q(name__icontains="101")|Q(category__slug="adidas")&Q(name__icontains="101")|Q(category__slug="adidas")&Q(brand__slug="adidas"))
-# Product.objects.filter(Q(brand__slug="adidas")|Q(name__icontains="101")|Q(category__slug="adidas"))
-# Product.objects.all()
 class ProdectDetailView(BaseDetailView):
     template_name = 'userportal/single-product.html'
     model = Product
@@ -288,6 +272,3 @@ class ProdectDetailView(BaseDetailView):
         context['productspecifications'] = ProductSpecification.objects.filter(product_id=product_id)
         return context
 
-
-class test(BaseTemplateView):
-    template_name = 'userportal/index.html'

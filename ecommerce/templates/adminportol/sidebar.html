@@ -27,7 +27,7 @@
                with font-awesome or any other icon font library -->
          
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="{% url 'custadmin:dashboard' %}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
@@ -36,7 +36,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="{% url 'custadmin:user' %}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 User
@@ -125,6 +125,15 @@
             </ul>
           </li>
 
+
+          <li class="nav-item">
+            <a href="{% url 'user:change_password' %}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Change Password
+              </p>
+            </a>
+          </li>
 
           <li class="nav-item">
             <a href="{% url 'logout' %}" class="nav-link">

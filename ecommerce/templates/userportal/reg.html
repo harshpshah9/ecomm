@@ -29,7 +29,7 @@
 						<div class="hover">
 							<h4>New to our website?</h4>
 							<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-							<a class="primary-btn" href="#">Login</a>
+							<a class="primary-btn" href="{% url 'user:login' %}">Login</a>
 						</div>
 					</div>
 				</div>
@@ -52,12 +52,8 @@
                 <label>Email</label>
                 {{form.email}}
 							</div>
-							<div class="col-md-12 form-group">
-								<label>Phone Number</label>
-								{{form.phone_no}}
-											</div>
-							<div class="col-md-12 form-group">
-               	
+
+					
               <div class="col-md-12 form-group">
                 <label>Password</label>
                 {{form.password1}}

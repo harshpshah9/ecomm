@@ -8,6 +8,8 @@ from django.urls import reverse_lazy
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
+from django.contrib.auth.views import *
+
 
 # Create your views here.
 class LoginView(LoginView):
@@ -23,7 +25,7 @@ class LoginView(LoginView):
 
 class SignupView(BaseCreateView):
     form_class = UserCreateForm
-    template_name = "userportal/signup.html"
+    template_name = "userportal/reg.html"
     success_url = reverse_lazy('user:login')
 
 
@@ -58,4 +60,24 @@ class WishlistDeleteView(BaseDeleteView):
     model = Wishlist
     template_name = 'userportal/wistlist.html'
     success_url = reverse_lazy('user:wishlist')
+
+
+class UserProfileUpdateView(BaseUpdateView):
+    template_name = 'userportal/userprofile.html'
+    model = User
+    field = '__all__'
+    success_url = reverse_lazy('index')
+
+
+class PasswordChangeView(PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('password_change_done')
+
+    def get_template_names(self):
+        if self.request.user.is_superuser:
+            return ['adminportol/change_password.html']
+        else:
+            return ['userportal/change_password.html']
+
+
 

@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'dynamic_formsets',
     'django_extensions',
+    'mathfilters', 
 ]
 
 MIDDLEWARE = [
