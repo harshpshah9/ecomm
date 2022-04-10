@@ -10,7 +10,6 @@
 					<nav class="d-flex align-items-center">
 						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
 						<a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
-						<a href="category.html">Fashon Category</a>
 					</nav>
 				</div>
 			</div>
@@ -24,21 +23,19 @@
 					
 					<div class="head">Browse Categories</div>
 					<ul class="main-categories">
-						{% for main_category in categories %}
-						{% if main_category.parent is None %}			
-						<li class="main-nav-list"><a class="border-bottom-0" data-toggle="collapse" href="#babyCare" aria-expanded="false"
-							 aria-controls="babyCare"><span class="lnr lnr-arrow-right"></span>{{main_category.name}}<span class="number"></span></a>
-							<ul class="collapse" id="babyCare" data-toggle="collapse" aria-expanded="false" aria-controls="babyCare">
-								{% for children_category in main_category.children.all %}
-								<li class="main-nav-list child" ><a href="#" class="category"  data-category-slug="{{children_category.slug}}">
-									{{children_category.name}} 									
-									<span class="number">({{children_category.sub_category_count}})</span></a></li>
-									{% endfor %}
-									
-								</ul>
-						</li>
-						{% endif %}
-						{% endfor %}
+                    {% for main_category in categories %}
+                        {% if main_category.parent is None %}
+                            <li class="main-nav-list"><a data-toggle="collapse" href="#{{main_category.slug}}" aria-expanded="false" aria-controls="{{main_category.slug}}">
+                                <span class="lnr lnr-arrow-right"></span>{{main_category.name}}<span class="number"></span></a>
+                                <ul class="collapse" id="{{main_category.slug}}" data-toggle="collapse" aria-expanded="false" aria-controls="{{main_category.slug}}">
+
+                                {% for child_category in main_category.child_categories.all %}
+                                <li class="main-nav-list child"><a href="#" class="category_slug" data-category-slug={{child_category.slug}}>{{child_category.name}}<span class="number">({{child_category.get_child_catogery_count}})</span></a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
 					</ul>
 				</div>
 
@@ -77,18 +74,20 @@
 			</div>
 			<div class="col-xl-9 col-lg-8 col-md-7">
 				<!-- Start Filter Bar -->
-			
+
 				<div class="filter-bar d-flex flex-wrap align-items-center">
+					<div >
+						<input type="search" id="mySearch" name="q">
+						<button class="btn btn-primary search">Search</button>
+					</div>
+
 					<div class="sorting">
 						
 					</div>
 					<div class="sorting mr-auto">
 						
 					</div>
-					<div>
-						<input type="search" id="mySearch" name="q">
-						<button class="btn btn-primary search">Search</button>
-					  </div>
+
 					<div class="pagination">
 						
 						{% if page_obj.has_previous %}
@@ -107,7 +106,9 @@
 				</div> 
 				<!-- End Filter Bar -->
 				<!-- Start Best Seller -->
-				<section class="lattest-product-area pb-40 category-list">
+							<section class="lattest-product-area pb-40 category-list">
+
+				<table >
 					<div class="row">
 						<!-- single product -->
 						{% if not products %}
@@ -149,6 +150,7 @@
 						{% endfor %}
 					
 					</div>
+					</table>
 				</section>
 				<!-- End Best Seller -->
 				<!-- Start Filter Bar -->
@@ -181,147 +183,8 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- Start related-product Area -->
-	<!-- <section class="related-product-area section_gap">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-6 text-center">
-					<div class="section-title">
-						<h1>Deals of the Week</h1>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-							magna aliqua.</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-9">
-					<div class="row">
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r1.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r2.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r3.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r5.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r6.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r7.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r9.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r10.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r11.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="ctg-right">
-						<a href="#" target="_blank">
-							<img class="img-fluid d-block mx-auto" src="img/category/c5.jpg" alt="">
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section> -->
-	<!-- End related-product Area -->
-
-{% endblock %} {% block javascript %}
-
-
+{% endblock %}
+ {% block javascript %}
 <script type="text/javascript">
 	$(document).ready(function(){
         var url = new URL(window.location);
@@ -331,14 +194,14 @@
 		console.log("brand_list",brand_list)
 		pages = url.searchParams.get('page')
 
-		$('.category').click(function(){
-            updated_category = $(this).data('category-slug')
-            console.log(updated_category)
-            url.searchParams.set('category', updated_category)
-            data=url.searchParams.set('page', 1)
+		$('.category_slug').click(function(){
+			updated_category = $(this).data('category-slug')
+			console.log(updated_category)
+			url.searchParams.set('category', updated_category)
+			url.searchParams.set('page', 1)
 			window.location.href = url.toString();
 
-   	 })
+		})
     	$('.brand').click(function(){
         updated_brand = $(this).data('brand-slug')
 
@@ -386,9 +249,7 @@
 	});
   </script>
   <script type="text/javascript">
-
-
-	 
+$('table').DataTable();
 </script>
 
 {% endblock javascript %}

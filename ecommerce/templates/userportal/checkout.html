@@ -44,7 +44,7 @@
                                                         <h5 class="card-title">Address {{forloop.counter}}</h5>
                                                     </label>
                                                   </div>
-                                            <p class="card-text">{{address.address1}}</p>
+                                            <p class="card-text">{{address.address}}</p>
                                             <p class="card-text">{{address.city}}, {{address.state}} {{address.country}} {{address.zip_code}} </p>
                                             
                                              <a href="{% url 'user:address_update' address.pk %}" class="btn fa fa-edit  btn-outline-info ">Edit</a>
@@ -79,7 +79,7 @@
                                 </ul>
 
                                 </div>
-                                <button type="submit" class="primary-btn">Placed Order</a>
+                                <button type="submit" class="primary-btn">Placed Order</button>
                             </div>
                             
                         </div>
@@ -91,3 +91,16 @@
     <!--================End Checkout Area =================-->
 
     {% endblock %}
+{% block javascript %}
+<script>
+$(document).ready(function(){
+  $(".primary-btn").click(function(){
+    alert("The paragraph was clicked.");
+  });
+});
+
+
+    
+</script>
+{% endblock javascript %}
+

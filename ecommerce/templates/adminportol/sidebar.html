@@ -27,7 +27,7 @@
                with font-awesome or any other icon font library -->
          
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="{% url 'custadmin:dashboard' %}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Dashboard
@@ -36,7 +36,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="{% url 'custadmin:user' %}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 User
@@ -45,7 +45,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="{% url 'order:order_admin_list'%}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Order
@@ -125,6 +125,37 @@
             </ul>
           </li>
 
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Coupon
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'custadmin:coupon_list' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View coupon</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'custadmin:coupon_create' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add coupon</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'user:change_password' %}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Change Password
+              </p>
+            </a>
+          </li>
 
           <li class="nav-item">
             <a href="{% url 'logout' %}" class="nav-link">

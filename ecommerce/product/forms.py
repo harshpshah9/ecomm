@@ -1,6 +1,6 @@
 from xml.parsers.expat import model
 from django.forms import ModelForm
-from product.models import Brand, Category, Product, ProductImage, ProductSpecification
+from product.models import Brand, Category, Product, ProductImage, ProductSpecification,Coupon
 from django.forms import inlineformset_factory
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Fieldset, Div, HTML, ButtonHolder, Submit
@@ -62,6 +62,10 @@ class ProductSpecificationForm(ModelForm):
         model = ProductSpecification
         fields = ['key', 'value']
 
+class CoupuanForm(ModelForm):
+    class Meta:
+        model = Coupon
+        fields = ['name','price','status']
 
 ProductMetaInlineFormset = inlineformset_factory(
     Product,
@@ -76,3 +80,4 @@ ProductSpecificationMetaInlineFormset = inlineformset_factory(
     form=ProductSpecificationForm,
     extra=1, can_delete=True,
 )
+

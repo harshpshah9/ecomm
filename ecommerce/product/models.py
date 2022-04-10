@@ -55,7 +55,7 @@ class Product(TimeStampedModel, ActivatorModel, models.Model):
         return self.name
 
 
-class ProductImage(models.Model):
+class ProductImage(TimeStampedModel,  models.Model):
     image = models.ImageField(upload_to='images/', null=True)
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE, null=True)
 
@@ -63,10 +63,18 @@ class ProductImage(models.Model):
         return self.image.url
 
 
-class ProductSpecification(models.Model):
+class ProductSpecification(TimeStampedModel, models.Model):
     product = models.ForeignKey(Product, related_name='specifications', on_delete=models.CASCADE)
     key = models.CharField(max_length=25)
     value = models.CharField(max_length=25)
 
     def __str__(self):
         return str(self.product)
+
+class Coupon(TimeStampedModel, ActivatorModel, models.Model):
+    name = models.CharField(max_length=250)
+    price = models.IntegerField()
+
+    def __str__(self):
+        return str(self.name)
+
