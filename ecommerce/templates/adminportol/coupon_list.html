@@ -52,13 +52,18 @@
 
                   <td>{{coupon.name}}</td>
                   <td>{{coupon.price}}</td>
-                  <th>{{coupon.status}}</th>
-                  <td><a href="{% url 'custadmin:coupon_update' coupon.id %}"><i class="fas fa-pen"></i></a> </td>
+              {% if coupon.status == 1 %}
+                  <th>Active</th>
+                  {% else %}
+                  <th>Inactive</th>
+                  {% endif %}
+
+                  <td><a href="{% url 'custadmin:coupon_update' coupon.id %}"><i class="btn fa fa-edit  btn-outline-info">Edit</i></a> </td>
                     <form method="post" action="{% url 'custadmin:coupon_delete' coupon.id %}">
                         {% csrf_token %}
                         <td>
-                          <button type="submit" class="btn btn-primary">
-  <i class="fas fa-trash"></i> </button>
+                          <button type="submit" class="btn btn-outline-danger">
+  Delete </button>
 
                         </td>
                       

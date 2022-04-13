@@ -62,8 +62,11 @@
                   {% endif %}
                   <td>{{product.category}}</td>
                   <td>{{product.brand}}</td>
-                  <td><a href="{% url 'custadmin:product_update' product.slug %}">Edit</a></td>
-                  <td>Delete</td>
+                  <td><a href="{% url 'custadmin:product_update' product.slug %}"><i class="btn fa fa-edit  btn-outline-info">Edit</i></a></td>
+                  <td><form method="post" action="{% url 'custadmin:product_delete' product.slug %}">
+                    {% csrf_token %}
+               <input type="submit" class="btn btn-outline-danger" Value="Delete">
+                </form></td>
                 </tr>
                 {% endfor %}
                 </tbody>

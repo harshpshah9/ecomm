@@ -1,10 +1,15 @@
 from django.contrib import admin
 
-from product.models import Brand, Category, Product, ProductImage,ProductSpecification
+from .models import Category,Brand,Product,ProductImage, ProductSpecification
+# # Register your models here.
+class ProductImageAdmin(admin.StackedInline):
+    model=ProductImage
+class ProductSpecificationAdmin(admin.StackedInline):
+    model = ProductSpecification 
+class ProductAdmin(admin.ModelAdmin):
+    inlines = [ProductImageAdmin,ProductSpecificationAdmin] 
 
-# Register your models here.
-admin.site.register(Product)
-admin.site.register(ProductImage)
+# admin.site.register(ProductImage)
 admin.site.register(Category)
 admin.site.register(Brand)
-admin.site.register(ProductSpecification)
+admin.site.register(Product,ProductAdmin)

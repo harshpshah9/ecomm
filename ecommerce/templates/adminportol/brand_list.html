@@ -51,12 +51,12 @@
 
                   <td>{{brand.name}}</td>
                   <td>{{brand.slug}}</td>
-                  <td><a href="{% url 'custadmin:brand_update' brand.slug %}"><i class="fas fa-pen"></i></a> </td>
+                  <td><a href="{% url 'custadmin:brand_update' brand.slug %}" ><i class="btn fa fa-edit  btn-outline-info">Edit</i></a> </td>
                     <form method="post" action="{% url 'custadmin:brand_delete' brand.slug %}">
                         {% csrf_token %}
                         <td>
-                          <button type="submit" class="btn btn-primary">
-  <i class="fas fa-trash"></i> </button>
+                          <button type="submit" class="btn btn-outline-danger">
+  Delete </button>
 
                         </td>
                       

@@ -61,8 +61,7 @@
 							<div class="col-lg-5 col-md-6">
 								<div class="banner-content">
 									<h1>Electronics 																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																					 <br>Collection!</h1>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+									<p>Capture more customers with a great brand recall.</p>
 								
 								</div>
 							</div>
@@ -74,8 +73,7 @@
 							<div class="col-lg-5">
 								<div class="banner-content">
 									<h1>Electronics<br>Collection!</h1>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+									<p>Capture more customers with a great brand recall,</p>
 									
 								</div>
 							</div>
@@ -146,7 +144,7 @@
 						<div class="col-lg-8 col-md-8">
 							<div class="single-deal">
 								<div class="overlay"></div>
-								<img class="img-fluid w-100" src="{% static 'userportal/img/category/c1.jpg'%}" alt="">
+								<img class="img-fluid w-100" src="{% static 'userportal/img/category/c1.jpg'%}"  >
 								<a href="img/category/c1.jpg" class="img-pop-up" target="_blank">
 									<div class="deal-details">
 										<h6 class="deal-title">Sneaker for Sports</h6>
@@ -225,8 +223,7 @@
 					{% for product in products %}
 		<div class="col-lg-3 col-md-6">
 			<div class="single-product">
-				<a href="{% url 'product:product_details' product.id %}"><img class="img-fluid"  src="{{product.images.all.first}}"
-					 alt=""></a>
+				<a href="{% url 'product:product_details' product.id %}" ><img class="img-fluid"   src="{{product.images.all.first}}" width="50" height="600"></a>
 				<div class="product-details">
 					<h6>{{product.name}}</h6>
 					<div class="price">

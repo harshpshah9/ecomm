@@ -21,6 +21,7 @@ urlpatterns = [
     path('product/create',ProductCreateView.as_view(),name='product_create'),
     path('product/',ProductAdminListView.as_view(),name="product_list"),
     path('product/update/<str:slug>',ProductUpdateView.as_view(),name='product_update'),
+    path('product/delete/<str:slug>',ProductDeleteView.as_view(),name="product_delete"),
 
      #coupon
     path('coupon/',CouponListView.as_view(),name='coupon_list'),
