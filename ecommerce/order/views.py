@@ -48,9 +48,9 @@ class AdminOrderListView(SuperuserAccessMixin, BaseListView):
 
 
 class AdminOrderDetailView(SuperuserAccessMixin, BaseDetailView):
-    template_name = 'adminportol/order_list.html'
+    template_name = 'adminportol/invoice.html'
     model = Order
-    context_object_name = 'orders'
+    context_object_name = 'order'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
