@@ -1,0 +1,55 @@
+{% extends "adminportol/base.html" %}
+{% load crispy_forms_tags %}
+{% block container %}
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+{% include "adminportol/navbar.html" %}
+  <!-- /.navbar -->
+  <!-- Main Sidebar Container -->
+{% include "adminportol/sidebar.html" %}
+
+  <div class="content-wrapper">
+    <div class="content">
+      <div class="container-fluid">
+          <!-- Horizontal Form -->
+          <div class="card card-info">
+            <div class="card-header">
+              <h3 class="card-title">Category</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form class="form-horizontal" method="post">
+                {% csrf_token %}
+              <div class="card-body">
+                <div class="form-group row">
+
+                  <div class="col-sm-12">
+                    {{form|crispy}}
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <button type="submit" class="btn btn-info">Create</button>
+              </div>
+              <!-- /.card-footer -->
+            </form>
+          </div>
+          <!-- /.card -->
+
+        
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+  {% endblock  %}

@@ -1,0 +1,28 @@
+{% extends "userportal/base.html" %}
+{% block container %}
+ {% load static %} 
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Order Has been placed</h1>
+					<nav class="d-flex align-items-center">
+						<a href="{% url 'user:dashboard' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="{% url 'order:order_lists' %}">OrderDetais</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!--================Order Details Area =================-->
+	<section class="order_details section_gap">
+		<div class="container">
+			<h3 class="title_confirmation">Thank you. Your order has been received.</h3>
+			<a href="{% url 'user:dashboard' %}"><h3>Go to Home</h3></a>
+		</div>
+	</section>
+	<!--================End Order Details Area =================-->
+{% endblock %}

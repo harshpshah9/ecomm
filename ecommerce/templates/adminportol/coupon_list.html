@@ -1,0 +1,101 @@
+{% extends "adminportol/base.html" %}
+{% block container %}
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+  <!-- Navbar -->
+{% include "adminportol/navbar.html" %}
+  <!-- /.navbar -->
+  <!-- Main Sidebar Container -->
+{% include "adminportol/sidebar.html" %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0"><a href="{% url 'custadmin:coupon_create' %}">Add Coupon</a></h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Coupon</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Coupon</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+           <table id="example1" class="table table-bordered table-striped display">
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+                {% for coupon in coupons %}
+                <tr>
+
+                  <td>{{coupon.name}}</td>
+                  <td>{{coupon.price}}</td>
+                  <th>{{coupon.status}}</th>
+                  <td><a href="{% url 'custadmin:coupon_update' coupon.id %}"><i class="fas fa-pen"></i></a> </td>
+                    <form method="post" action="{% url 'custadmin:coupon_delete' coupon.id %}">
+                        {% csrf_token %}
+                        <td>
+                          <button type="submit" class="btn btn-primary">
+  <i class="fas fa-trash"></i> </button>
+
+                        </td>
+                      
+                    </form>
+                </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+  {% endblock %}
+{% block js %}
+
+{% endblock js %}

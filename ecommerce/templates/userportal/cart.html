@@ -1,0 +1,198 @@
+{% extends "userportal/base.html" %} {% block container %} {% load static %} 
+{% load mathfilters %}
+<!-- Start Banner Area -->
+
+<section class="banner-area organic-breadcrumb">
+  <div class="container">
+    <div
+      class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end"
+    >
+      <div class="col-first">
+        <h1>Shopping Cart</h1>
+        <nav class="d-flex align-items-center">
+          <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+          <a href="category.html">Cart</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Banner Area -->
+<!--================Cart Area =================-->
+{% comment %}
+<form method="get" id="form-tmp">
+  {% endcomment %} {% csrf_token %}
+  <section class="cart_area">
+    <div class="container">
+      <div class="cart_inner">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for cart in carts %}
+              <tr id="delete_{{cart.id}}">
+                <td>
+                  <div class="media">
+                    <div class="d-flex">
+                      <img
+                        src="{{cart.product.images.all.first}}"
+                        width="50px"
+                        alt=""
+                      />
+                    </div>
+                    <div class="media-body">
+                      <p>{{cart.product}}</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <h5 >RS.{{cart.product.price}}</h5>
+                </td>
+                <td>
+                  <div class="product_count">
+                    <input
+                      type="number"
+                      name="qty"
+                      id="qty_{{cart.product.id}}"
+                      min=1
+                      maxlength="12"
+                      value="{{cart.qty}}"
+                      title="Quantity:"
+                      class="input-text qty"
+                      data-product-id="{{cart.product.id}}"
+                    />
+                   
+                    {% comment %} <button
+                      onclick="var result = document.getElementById('{{cart.product}}');
+                       var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                      class="increase items-count"
+                      type="button"
+                    >
+                      <i class="lnr lnr-chevron-up"></i>
+                    </button>
+                    <button
+                      onclick="var result = document.getElementById('{{cart.product}}');
+                       var sst = result.value; if( !isNaN( sst ) &amp;\amp; sst > 0 ) result.value--;return false;"
+                      class="reduced items-count"
+                      type="button"
+                    >
+                      <i class="lnr lnr-chevron-down"></i></button
+                    > {% endcomment %}
+                  </div>
+                </td>
+                <td><h5 id="total_{{cart.product.id}}">RS.{{cart.product.price|mul:cart.qty}}</h5>
+                </td>
+                <td>
+                  <button
+                    class="fa fa-trash-o"
+                    id="delete_cart_{{cart.id}}"
+                    name="delete_cart"
+                    style="font-size: 36px; color: red"
+                    data-cartid="{{cart.id}}"
+                  ></button>
+                </td>
+              </tr>
+              {% endfor %}
+
+              <tr class="bottom_button">
+                <td>
+                  
+                </td>
+                <td></td>
+                <td></td>
+                <td>
+                  
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                  <h5>Subtotal</h5>
+                </td>
+                <td>
+                  <h5 id="grand_total" >RS.{{grand_total}}</h5>
+                </td>
+              </tr>
+              <tr class="out_button_area">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <div class="checkout_btn_inner d-flex align-items-center">
+                    <a class="gray_btn" href="{% url 'user:dashboard' %}"
+                      >Continue Shopping</a
+                    >
+                    <a class="primary-btn" href="{% url 'cart:checkout' %}"
+                      >Proceed to checkout</a
+                    >
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% comment %}
+</form>
+{% endcomment %}
+<!--================End Cart Area =================-->
+{% endblock %} {% block javascript %}
+<script type="text/javascript">
+  console.log("jqury");
+  $(".fa-trash-o").click(function () {
+    cart_item_id = $(this).data("cartid");
+
+    $.ajax({
+      url: `{% url 'cart:delete_cart' '0' %}`.replace("0", cart_item_id),
+      type: "post",
+      data: { csrfmiddlewaretoken: "{{csrf_token}}" },
+      success: function (response) {
+        console.log(response);
+        console.log(cart_item_id);
+        $('#delete_'+cart_item_id).remove(); 
+        var total = 'RS.'+response.grand_total;
+        console.log('>>>>>>>>>>>',total); 
+        $('#grand_total').text(total); 
+      },
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(".qty").change(function () {
+      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>")
+      product_id = $(this).data('product-id') 
+       update_qty=$('#qty_'+product_id).val()
+       console.log(product_id);
+       console.log(update_qty);
+       $.ajax({
+          url:`{% url 'cart:update_cart' %}`,
+          type:'POST',
+          data:{
+              csrfmiddlewaretoken: "{{csrf_token}}",
+                  'update_qty':update_qty,
+                  'product_id':product_id,
+              },
+          success: function (response) {
+            console.log(response);
+            var total = 'RS.'+response.amount; 
+            var grand_total = 'RS.'+response.grand_total
+            console.log(grand_total);
+            $('#grand_total').text(grand_total);
+            $('#total_'+product_id).text(total);
+          },
+      });
+  });
+</script>
+
+{% endblock javascript %} 

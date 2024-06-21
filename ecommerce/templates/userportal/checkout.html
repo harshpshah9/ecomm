@@ -1,0 +1,106 @@
+{% extends "userportal/base.html" %}
+{% block container %}
+ {% load static %} 
+ {% load mathfilters %}
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Checkout</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="single-product.html">Checkout</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Checkout Area =================-->
+    <section class="checkout_area section_gap">
+        <div class="container">
+            <form action="/order/placeorder" method="GET">
+                <div class="billing_details">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3>Billing Details</h3>
+                            {% comment %} address card {% endcomment %}
+                            <a href="{% url 'user:create_address' %}" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-plus" viewBox="0 0 16 16">
+                                <path d="M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5V6z"/>
+                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+                              </svg>Add address</a>
+                            <div class="row">
+                                {% for address in user_addresses %}
+                                <div class="col-sm-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="customRadio{{forloop.counter}}" name="custid" class="custom-control-input" value="{{address.id}}" required="" placeholder="username"
+                                                    oninvalid="this.setCustomValidity('Please select any address')"
+                                                    oninput="setCustomValidity('')">
+                                                    <label class="custom-control-label" for="customRadio{{forloop.counter}}">
+                                                        <h5 class="card-title">Address {{forloop.counter}}</h5>
+                                                    </label>
+                                                  </div>
+                                            <p class="card-text">{{address.address}}</p>
+                                            <p class="card-text">{{address.city}}, {{address.state}} {{address.country}} {{address.zip_code}} </p>
+                                            
+                                             <a href="{% url 'user:address_update' address.pk %}" class="btn fa fa-edit  btn-outline-info ">Edit</a>
+                                            <form action="{% url 'user:address_delete' address.pk %}" method="POST" class="d-inline" >
+                                                {% csrf_token %}
+                                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                            </form> 
+                                            </div>
+                                        </div>
+                                </div>
+                                {% endfor %}
+                            
+                              </div>
+                            </div>
+
+                        <div class="col-lg-4">
+                            <div class="order_box">
+                                
+                                <h2>Your Order</h2>
+                                <ul class="list">
+                                    <li><a disabled="disabled">Product <span>Total</span></a></li>
+                                    {% for carts in cart %}
+                                    
+                                <li><a href="{% url 'product:product_details' carts.product.pk  %}">{{carts.product|truncatechars:10}}
+                                <span class="middle"></span>x{{carts.qty}}<span class="last">
+                                    ${{carts.product.price}}</span></a></li>
+                                {% endfor %}
+                                </ul>    
+                                <ul class="list list_2">
+                                    
+                                    <li><a  disabled="disabled">Total<span>RS.{{total}}</span></a></li>
+                                </ul>
+
+                                </div>
+                                <button type="submit" class="primary-btn">Placed Order</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </form>    
+        </div>
+    </section>
+    <!--================End Checkout Area =================-->
+
+    {% endblock %}
+{% block javascript %}
+<script>
+$(document).ready(function(){
+  $(".primary-btn").click(function(){
+    alert("The paragraph was clicked.");
+  });
+});
+
+
+    
+</script>
+{% endblock javascript %}
+

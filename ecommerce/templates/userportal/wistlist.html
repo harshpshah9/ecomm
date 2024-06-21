@@ -1,0 +1,59 @@
+{% extends "userportal/base.html" %}
+{% block container %}
+ {% load static %} 
+ {% load crispy_forms_tags %}
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Checkout</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="single-product.html">Checkout</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Checkout Area =================-->
+    <section class="checkout_area section_gap">
+        <div class="container">
+            
+            <div class="billing_details">
+                <div class="row">
+                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                        <tr>
+                            
+                            <td>Image</td>
+                            <td>Product</td>
+                            <td>Price</td>
+                            <td>Remove</td> 
+                        </tr>
+                        {% for wistlist in userwistlist %}
+                        <tr id="delete_{{wistlist.id}}">
+                            <td><img src="{{wistlist.products.images.all.first}}" width="50px" height="50px"></td>
+                            <td>{{wistlist.products}}</td>
+                            <td>RS.{{wistlist.products.price}}</td>
+                            <td>
+                            <form action="{% url 'user:wishlist_delete' wistlist.pk %}" method="POST" class="d-inline" >
+                                {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                            </form> 
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    
+                        <!-- <h1>No wistlist</h1> -->
+                    
+         
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Checkout Area =================-->
+
+    {% endblock %}
